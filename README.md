@@ -1,3 +1,6 @@
-Game catalog webpage for me to keep track of what games I currently own, what I thought about them and games I want to buy and their information.
+#Game Store
 
-The technologies used were HTML, CSS with Bootstrap 4 and Vanilla JavaScript.
+This project is a game store that the clients can put comments about the games and give it a grade. The main object of this project is
+to improve my skills in the technologies used.
+
+The tech stack used was HTML, CSS with Bootstrap 4, Node.JS, Express.JS, and MongoDB.
