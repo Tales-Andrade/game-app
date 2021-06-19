@@ -16,6 +16,8 @@ app.options('*', cors());
 
 const port = Number(process.env.PORT || 3000);
 
+app.use('/users', userRouter);
+
 // Error Route
 app.all('*', (req, res, next) => {
     const err = new HttpException(404, 'Page Not Found!');

@@ -1,5 +1,5 @@
 const awaitHandlerFactory = (middleware) => {
-    return async (res, res, next) => {
+    return async (req, res, next) => {
         try {
             await middleware(req, res, next);
         } catch (err) {
