@@ -9,7 +9,7 @@ const { createUserSchema, updateUserSchema, validateLogin } = require('../middle
 
 // Admin Routes
 router.route('/admin')
-    .get(aut(Role.Admin), awaitHandlerFactory(userController.renderAdmin))
+    .get(auth(Role.Admin), awaitHandlerFactory(userController.renderAdmin))
     .patch(auth(Role.Admin), updateUserSchema, awaitHandlerFactory(userController.updateUser))
     .delete(auth(Role.Admin), awaitHandlerFactory(userController.deleteUser));
 
