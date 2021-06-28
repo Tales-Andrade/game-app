@@ -1,29 +1,33 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const userController = require('../controllers/users');
-const auth = require('../middleware/auth');
 const Role = require('../utils/userRoles');
-const awaitHandlerFactory = require('../middleware/awaitHandlerFactory');
-
-const { createUserSchema, updateUserSchema, validateLogin } = require('../middleware/validators/userValidator');
+const { catchAsync, isAdmin, isAuthor, createUserSchema, updateUserSchema, validateLogin, isLoggedIn } = require('../middleware/middleware');
 
 // Admin Routes
 router.route('/admin')
-    .get(auth(Role.Admin), awaitHandlerFactory(userController.renderAdmin))
-    .patch(auth(Role.Admin), updateUserSchema, awaitHandlerFactory(userController.updateUser))
-    .delete(auth(Role.Admin), awaitHandlerFactory(userController.deleteUser));
+    .get(isLoggedIn, isAdmin, catchAsync(userController.renderAdmin))
+
+// User Profile Routes
+router.route('/profile/:id')
+    .get(isLoggedIn, isAuthor, catchAsync(userController.showUser))
+    .put(isLoggedIn, isAuthor, updateUserSchema, catchAsync(userController.updateUser))
+    .delete(isLoggedIn, isAuthor, catchAsync(userController.deleteUser));
+
+// Edit Route
+router.get('/profile/:id/edit', isLoggedIn, isAuthor, catchAsync(userController.renderEditForm));
 
 // Register Routes
 router.route('/register')
     .get(userController.renderRegister)
-    .post(createUserSchema, awaitHandlerFactory(userController.createUser))
+    .post(createUserSchema, catchAsync(userController.createUser))
 
 // Login Routes
 router.route('/login')
     .get(userController.renderLogin)
-    .post(validateLogin, awaitHandlerFactory(userController.userLogin));
+    .post(validateLogin, catchAsync(userController.userLogin));
 
-// Logout Routes
-router.get('/logout', awaitHandlerFactory(userController.userLogout));
+// Logout Route
+router.get('/logout', catchAsync(userController.userLogout));
 
 module.exports = router;

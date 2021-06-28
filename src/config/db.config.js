@@ -17,22 +17,23 @@ class DBConnection {
     }
 
     checkConnection() {
-        this.db.getConnection((err, connection) => {
-            if (err) {
-                if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        this.db.getConnection((error, connection) => {
+            if (error) {
+                if (error.code === 'PROTOCOL_CONNECTION_LOST') {
                     console.error('Database connection was closed.');
                 }
 
-                if (err.code === 'ER_CON_COUNT_ERROR') {
+                if (error.code === 'ER_CON_COUNT_ERROR') {
                     console.error('Database has too many connections.');
                 }
 
-                if (err.code === 'ECONNREFUSED') {
+                if (error.code === 'ECONNREFUSED') {
                     console.error('Database connection was refused.')
                 }
             }
 
             if (connection) {
+                console.log('Connected to the MySQL database.');
                 connection.release();
             }
 
@@ -52,17 +53,20 @@ class DBConnection {
                 resolve(result);
             }
 
+            // Call prepare and query
             this.db.execute(sql, values, callback);
-        }).catch(err => {
+        }).catch(error => {
             const mysqlErrorList = Object.keys(HttpStatusCodes);
 
-            err.status = mysqlErrorList.includes(err.code) ? HttpStatusCodes[err.code] : err.status;
+            // Convert the mysql errors to http status codes.
+            error.status = mysqlErrorList.includes(error.code) ? HttpStatusCodes[error.code] : error.status;
 
-            throw err;
+            throw error;
         });
     }
 }
 
+// Enum Object of Http Status Codes
 const HttpStatusCodes = Object.freeze({
     ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: 422,
     ER_DUP_ENTRY: 409
