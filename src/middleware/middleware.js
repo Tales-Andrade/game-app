@@ -1,10 +1,12 @@
+const session = require('express-session');
 const { body } = require('express-validator');
+const jwt = require('jsonwebtoken');
 const Role = require('../utils/userRoles');
 
 module.exports.globalMiddleware = (req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
-    //res.locals.currentUser = 1;
+    res.locals.currentUser = req.session.user;
     next();
 }
 
@@ -32,6 +34,11 @@ module.exports.catchAsync = (middleware) => {
 }
 
 module.exports.isLoggedIn = (req, res, next) => {
+    if ((!req.session.user) || (!req.session.token)) {
+        req.flash('error', 'You must be signed in!');
+        return res.redirect('/login');
+    }
+
     next();
 }
 
@@ -39,7 +46,21 @@ module.exports.isAuthor = async (req, res, next) => {
     next();
 }
 
+module.exports.isUser = (req, res, next) => {
+    if (!((req.session.user.role === Role.Admin) || (req.params.id === req.session.user.id.toString()))) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect('/');
+    }
+
+    next();
+}
+
 module.exports.isAdmin = async (req, res, next) => {
+    if (!(req.session.user.role === Role.Admin)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect('/');
+    }
+
     next();
 }
 

@@ -2,11 +2,10 @@ const UserModel = require('../models/user');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 const HttpException = require('../utils/HttpException');
 const Role = require('../utils/userRoles');
 
-dotenv.config();
+require('dotenv').config();
 
 class UserController {
     renderAdmin = async (req, res, next) => {
@@ -26,14 +25,7 @@ class UserController {
     };
 
     showUser = (req, res) => {
-        const user = UserModel.findOne(req.params.id);
-
-        if (!user) {
-            req.flash('error', 'User not found!');
-            return res.redirect('/');
-        }
-
-        const { password, ...userWithoutPassword } = user;
+        const { password, ...userWithoutPassword } = req.session.user;
 
         res.render('users/show', { userWithoutPassword });
     };
@@ -60,7 +52,7 @@ class UserController {
             req.flash('error', 'User update failed!');
         }
 
-        res.redirect(`/profile/${req.params.id}`);
+        res.redirect(`/profiles/${req.params.id}`);
     };
 
     deleteUser = async (req, res, next) => {
@@ -76,7 +68,7 @@ class UserController {
     };
 
     renderEditForm = async (req, res, next) => {
-        const user = await UserModel.findOne(req.params.id);
+        const user = await UserModel.findOne({ id: req.params.id });
 
         if (!user) {
             req.flash('error', 'User not found!');
@@ -114,9 +106,40 @@ class UserController {
         res.render('users/login');
     };
 
-    userLogin = async (req, res, next) => { };
+    userLogin = async (req, res, next) => {
+        this.isValid(req);
 
-    userLogout = async (req, res, next) => { };
+        const { email, password: pass } = req.body;
+
+        const user = await UserModel.findOne({ email });
+
+        if (!user) {
+            req.flash('error', 'You do not have an account associated to this email!');
+            return res.redirect('/register');
+        }
+
+        const isMatch = await bcrypt.compare(pass, user.password);
+
+        if (!isMatch) {
+            req.flash('error', 'Incorrect Password!');
+            return res.redirect('/login');
+        }
+
+        const secretKey = process.env.SECRET_JWT || '';
+        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
+
+        req.session.token = token;
+        req.session.user = user;
+
+        res.redirect(`/profiles/${user.id}`);
+    };
+
+    userLogout = async (req, res, next) => {
+        req.session.token = null;
+        req.session.user = null;
+        req.flash('success', 'Successfully logged out!');
+        res.redirect('/');
+    };
 
     isValid = req => {
         const errors = validationResult(req);
