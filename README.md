@@ -1,9 +1,11 @@
-# Game Store
+# Game Centre
 
-This project is a game application to improve my knowledge of full stack web development.
+Game centre where users can find information about games, leave reviews about their experience, and select their favorite games.
+
+This project has as goal the improvement of my knowledge of full stack web development.
 
 ## Deployed Application in Heroku
-[Game App]()
+[Game Centre]()
 
 ## Features
 
@@ -17,6 +19,7 @@ This project is a game application to improve my knowledge of full stack web dev
 - css-loader
 ### Back End
 - NodeJS
+- MySQL
 - MongoDB
 - mongoose
 - express
