@@ -126,7 +126,7 @@ class UserController {
         }
 
         const secretKey = process.env.SECRET_JWT || '';
-        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
+        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '1m' });
 
         req.session.token = token;
         req.session.user = user;

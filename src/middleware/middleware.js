@@ -34,7 +34,13 @@ module.exports.catchAsync = (middleware) => {
 }
 
 module.exports.isLoggedIn = (req, res, next) => {
-    if ((!req.session.user) || (!req.session.token)) {
+    if ((!req.session.user) || (!req.session.token) || (jwt.verify(req.session.token, process.env.SECRET_JWT, function (err, decoded) {
+        if (err) {
+            return true;
+        }
+    }))) {
+        req.session.user = null;
+        req.session.token = null;
         req.flash('error', 'You must be signed in!');
         return res.redirect('/login');
     }
