@@ -1,1 +1,43 @@
-<% layout('layouts/boilerplate') %>
+<% layout('layouts/admin') %>
+
+    <div class="container" style="color: white">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 my-3">
+                <h1 class="text-center">All Users</h1>
+                <p class="text-center lead">The registered users are below:</p>
+                <% if(userList.length> 0) {%>
+                    <div class="responsive-table">
+                        <table class="table my-3">
+                            <% userList.forEach(user=> { %>
+                                <tr class="userList">
+                                    <td>
+                                        <%= user.username %>
+                                    </td>
+                                    <td>
+                                        <%= user.email %>
+                                    </td>
+                                    <td>
+                                        <%= user.role %>
+                                    </td>
+                                    <td>
+                                        <a class="delete" href="/profiles/<%=user.id%>/edit">Edit</a>
+                                    </td>
+                                    <td style="padding: 2px 0 0 0">
+                                        <form class="d-inline" action="/profiles/<%= user.id %>?_method=DELETE"
+                                            method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                            <button class="btn btn-link delete">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <p class="text-center lead">There are no registered users in this application.</p>
+                        <% } %>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>

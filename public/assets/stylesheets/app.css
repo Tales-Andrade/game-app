@@ -1,0 +1,54 @@
+.user{
+    background-image: linear-gradient(to right, #240035, #670979 40%, #1b80d0 100%);
+}
+
+.admin{
+    background-image: linear-gradient( #1c1c01, #737909 65%, #e9f602 100%);
+}
+
+.userList{
+    color: white;
+}
+
+.delete{
+    text-decoration: none;
+    color: white;
+}
+
+#home {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=953&q=80");
+    background-size: cover;
+    background-position: center;
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+}
+
+.home-cover-container{
+    max-width: 60vw;
+}
+
+.home-nav-link{
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 1rem;
+    border-bottom: 0.25rem solid transparent;
+    text-decoration: none;
+}
+
+.home-nav-link:hover{
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom-color:rgba(255, 255, 255, 0.5);
+}
+
+.home-nav-link.active{
+    color: white;
+    border-bottom-color: white;
+}
+
+.home-btn-secondary, .home-btn-secondary:hover{
+    color: #333;
+    text-shadow: none
+}

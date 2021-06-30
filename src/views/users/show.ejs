@@ -1,1 +1,5 @@
-<% layout('layouts/boilerplate') %>
+<% if (currentUser && currentUser.role==='Admin' ) {%>
+    <% layout('layouts/admin') %>
+        <% } else {%>
+            <% layout('layouts/boilerplate') %>
+                <% } %>

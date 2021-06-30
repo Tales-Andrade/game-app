@@ -168,9 +168,14 @@ module.exports.updateUserSchema = [
         })
         .withMessage('Please provide required field to update!')
         .custom(value => {
+            let result = true;
             const updates = Object.keys(value);
-            const allowUpdates = ['username', 'password', 'confirm_password', 'email', 'role', 'first_name', 'last_name', 'age'];
-            return updates.every(update => allowUpdates.includes(update));
+            const allowUpdates = ['username', 'password', 'confirm_password', 'email', 'role', 'first_name', 'last_name', 'age', 'admin', '_csrf'];
+
+            for (let i = 0; i < updates.length; i++) {
+                result = result && allowUpdates.includes(updates[i]);
+            }
+            return result;
         })
         .withMessage('Invalid updates!')
 ];

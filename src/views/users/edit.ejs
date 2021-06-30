@@ -1,0 +1,100 @@
+<% if (currentUser && currentUser.role==='Admin' ) {%>
+    <% layout('layouts/admin') %>
+        <% } else {%>
+            <% layout('layouts/boilerplate') %>
+                <% } %>
+
+                    <div class="container d-flex justify-content-center align-items-center mt-5">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4 mb-5">
+                                <div class="card shadow">
+                                    <img src="https://images.unsplash.com/photo-1605134550917-5fe8cf25a125?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Update User Information</h5>
+                                        <form action="/profiles/<%=user.id%>?_method=PUT" method="POST"
+                                            class="validated-form" novalidate>
+                                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input type="text" class="form-control" id="username" name="username"
+                                                    value="<%=user.username%>">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a username.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="first_name" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="first_name"
+                                                    name="first_name" value="<%=user.first_name%>">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a first name.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="last_name" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                                    value="<%=user.last_name%>">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a last name.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    value="<%=user.email%>">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a valid email.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" minlength="3" maxlength="50">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a valid password between 3 and 50 characters.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirm_password" class="form-label">Confirm
+                                                    Password</label>
+                                                <input type="password" class="form-control" id="confirm_password"
+                                                    name="confirm_password" minlength="3" maxlength="50">
+                                                <div class="valid-feedback">
+                                                    This is a valid input!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please choose a valid password between 3 and 50 characters.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="admin" class="form-label">Admin Token</label>
+                                                <input type="text" class="form-control" id="admin" name="admin">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="age" class="form-label">Age</label>
+                                                <input type="number" class="form-control" id="age" name="age" min="0"
+                                                    max="115" value="<%=user.age%>">
+                                            </div>
+                                            <button class="btn btn-info btn-block">Update</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

@@ -35,7 +35,11 @@ class UserController {
 
         await this.hashPassword(req);
 
-        const { confirm_password, ...restOfUpdates } = req.body;
+        if (req.body.admin === process.env.ADMIN) {
+            req.body.role = Role.Admin;
+        }
+
+        const { confirm_password, _csrf, admin, ...restOfUpdates } = req.body;
 
         const result = await UserModel.update(restOfUpdates, req.params.id);
 
@@ -75,7 +79,7 @@ class UserController {
             return res.redirect('/');
         }
 
-        res.render('users/edit', user);
+        res.render('users/edit', { user });
     }
 
     renderRegister = (req, res) => {
@@ -126,12 +130,13 @@ class UserController {
         }
 
         const secretKey = process.env.SECRET_JWT || '';
-        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '1m' });
+        const token = jwt.sign({ user_id: user.id.toString() }, secretKey, { expiresIn: '24h' });
 
         req.session.token = token;
         req.session.user = user;
+        let url = (user.role === Role.Admin) ? '/admin' : `/profiles/${user.id}`;
 
-        res.redirect(`/profiles/${user.id}`);
+        res.redirect(url);
     };
 
     userLogout = async (req, res, next) => {

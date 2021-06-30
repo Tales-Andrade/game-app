@@ -8,15 +8,23 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/favorites">Favorites</a>
+                <a class="nav-link" href="/games">Games</a>
+                <% if(currentUser && currentUser.role !=='Admin' ) { %>
+                    <a class="nav-link" href="/favorites">Favorites</a>
+                    <% } %>
             </div>
             <div class="navbar-nav ms-auto">
                 <% if(!currentUser) {%>
                     <a href="/login" class="nav-link">Login</a>
                     <a href="/register" class="nav-link">Register</a>
                     <% } else {%>
-                        <a href="/logout" class="nav-link">Logout</a>
-                        <% } %>
+                        <% if (currentUser.role==='Admin' ) { %>
+                            <a href="/admin" class="nav-link">Admin</a>
+                            <% } else { %>
+                                <a href="/profiles/<%= currentUser.id %>" class="nav-link">Profile</a>
+                                <% } %>
+                                    <a href="/logout" class="nav-link">Logout</a>
+                                    <% } %>
             </div>
         </div>
     </div>
