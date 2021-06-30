@@ -24,10 +24,10 @@ class UserController {
         res.render('users/admin', { userList });
     };
 
-    showUser = (req, res) => {
-        const { password, ...userWithoutPassword } = req.session.user;
+    showUser = async (req, res, next) => {
+        const { password, ...user } = await UserModel.findOne({ id: req.params.id });
 
-        res.render('users/show', { userWithoutPassword });
+        res.render('users/show', { user });
     };
 
     updateUser = async (req, res, next) => {
@@ -68,7 +68,7 @@ class UserController {
         }
 
         req.flash('success', 'User successfully deleted!');
-        res.redirect('/');
+        res.redirect('/logout');
     };
 
     renderEditForm = async (req, res, next) => {

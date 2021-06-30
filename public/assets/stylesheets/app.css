@@ -1,9 +1,13 @@
 .user{
     background-image: linear-gradient(to right, #240035, #670979 40%, #1b80d0 100%);
+    background-size: cover;
+    background-position: center;
 }
 
 .admin{
-    background-image: linear-gradient( #1c1c01, #737909 65%, #e9f602 100%);
+    background-image: linear-gradient(to right,  #1c1c01, #737909 65%, #e9f602 100%);
+    background-size: cover;
+    background-position: center;
 }
 
 .userList{
