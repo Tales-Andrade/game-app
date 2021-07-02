@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const userController = require('../controllers/users');
-const Role = require('../utils/userRoles');
+//const Role = require('../utils/userRoles');
 const { catchAsync, isAdmin, isUser, createUserSchema, updateUserSchema, validateLogin, isLoggedIn } = require('../middleware/middleware');
 
 // Admin Routes

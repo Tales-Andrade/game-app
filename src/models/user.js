@@ -33,7 +33,7 @@ class UserModel {
     }
 
     // Create an user in the database.
-    create = async ({ username, password, first_name, last_name, email, role = Role.SuperUser, age = 0 }) => {
+    create = async ({ username, password, first_name, last_name, email, role = Role.User, age = 0 }) => {
         const sql = `INSERT INTO ${this.tableName}
         (username, password, first_name, last_name, email, role, age) VALUES (?,?,?,?,?,?,?)`;
 

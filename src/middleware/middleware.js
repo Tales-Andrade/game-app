@@ -99,7 +99,7 @@ module.exports.createUserSchema = [
         .normalizeEmail(),
     body('role')
         .optional()
-        .isIn([Role.Admin, Role.SuperUser])
+        .isIn([Role.Admin, Role.User])
         .withMessage('Invalid Role type!'),
     body('password')
         .exists()
@@ -143,7 +143,7 @@ module.exports.updateUserSchema = [
         .normalizeEmail(),
     body('role')
         .optional()
-        .isIn([Role.Admin, Role.SuperUser])
+        .isIn([Role.Admin, Role.User])
         .withMessage('Invalid Role type!'),
     body('password')
         .optional()
