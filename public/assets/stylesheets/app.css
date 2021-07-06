@@ -56,3 +56,56 @@
     color: #333;
     text-shadow: none
 }
+
+.card-link{
+    text-decoration: none;
+    color: black;
+}
+
+
+.card-link:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.game-card{
+    position: relative;
+    border-radius: 5px;
+}
+
+.game-card:hover{
+    border: 2px solid black;
+}
+
+.game-grade{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.card-title{
+    font-size: 12px;
+}
+
+.img-game{
+    height: 300px;
+}
+
+.search-game{
+    background-color: transparent;
+    border: 2px solid #22254b;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+}
+
+.search-game::placeholder{
+    color: #7378c5;
+}
+
+.search-game:focus{
+    outline: none;
+    background-color: #22254b;
+}

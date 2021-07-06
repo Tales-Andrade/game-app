@@ -19,20 +19,18 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="home-nav-link active" aria-current="page" href="/">Home</a>
                     <a class="home-nav-link" href="/games">Games</a>
-                    <% if(currentUser && currentUser.role !=='Admin' ) { %>
-                        <a class="home-nav-link" href="/favorites">Favorites</a>
-                        <% } %>
-                            <% if(!currentUser) {%>
-                                <a href="/login" class="home-nav-link">Login</a>
-                                <a href="/register" class="home-nav-link">Register</a>
-                                <% } else {%>
-                                    <% if (currentUser.role==='Admin' ) { %>
-                                        <a href="/admin" class="home-nav-link">Admin</a>
-                                        <% } else { %>
-                                            <a href="/profiles/<%= currentUser.id %>" class="home-nav-link">Profile</a>
-                                            <% } %>
-                                                <a href="/logout" class="home-nav-link">Logout</a>
-                                                <% } %>
+                    <% if(!currentUser) {%>
+                        <a href="/login" class="home-nav-link">Login</a>
+                        <a href="/register" class="home-nav-link">Register</a>
+                        <% } else {%>
+                            <% if (currentUser.role==='Admin' ) { %>
+                                <a href="/admin" class="home-nav-link">Admin</a>
+                                <% } else { %>
+                                    <a class="home-nav-link" href="/favorites">Favorites</a>
+                                    <a href="/profiles/<%= currentUser.id %>" class="home-nav-link">Profile</a>
+                                    <% } %>
+                                        <a href="/logout" class="home-nav-link">Logout</a>
+                                        <% } %>
                 </nav>
             </div>
         </header>

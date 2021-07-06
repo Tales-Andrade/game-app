@@ -18,9 +18,8 @@ const session = require('express-session');
 const HttpException = require('./src/utils/HttpException');
 const errorMiddleware = require('./src/middleware/error');
 const userRouter = require('./src/routes/users');
+const gameRouter = require('./src/routes/games');
 const { globalMiddleware, checkCsurfError, csurfMiddleware } = require('./src/middleware/middleware');
-//const { default: axios } = require('axios');
-
 // Initiating express application
 const app = express();
 
@@ -94,6 +93,7 @@ app.use(csurfMiddleware);
 
 // Routes
 app.use('/', userRouter);
+app.use('/games', gameRouter);
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -113,16 +113,3 @@ app.on('ready!', () => {
         console.log(`Server running on port ${PORT}!`);
     });
 });
-
-// axios({
-//     method: 'post',
-//     url: 'https://api.igdb.com/v4/games',
-//     headers: {
-//         'Client-ID': process.env.TWITCH_CLIENT_ID,
-//         'Authorization': `Bearer ${process.env.TWITCH_APP_ACCESS_TOKEN}`,
-//         'Accept': 'application/json'
-//     },
-//     data: 'fields cover.*; limit 5;'
-// })
-//     .then(res => console.log(res.data))
-//     .catch(err => console.log(err))
