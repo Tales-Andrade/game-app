@@ -2,6 +2,8 @@ const session = require('express-session');
 const { body } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const Role = require('../utils/userRoles');
+const ReviewModel = require('../models/review');
+const { reviewSchema } = require('../../schemas');
 
 module.exports.globalMiddleware = (req, res, next) => {
     res.locals.error = req.flash('error');
@@ -49,6 +51,17 @@ module.exports.isLoggedIn = (req, res, next) => {
 }
 
 module.exports.isAuthor = async (req, res, next) => {
+    next();
+}
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+    const review = await ReviewModel.findById(req.params.reviewId);
+
+    if (!review.author.equals(req.session.user.id)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/games/${req.params.id}`);
+    }
+
     next();
 }
 
@@ -193,3 +206,14 @@ module.exports.validateLogin = [
         .notEmpty()
         .withMessage('Password must be filled.')
 ];
+
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new HttpException(400, msg);
+    } else {
+        next();
+    }
+}

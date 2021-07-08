@@ -1,4 +1,5 @@
 const axios = require('axios');
+const ReviewModel = require('../models/review');
 
 class GameController {
     renderGames = async (req, res) => {
@@ -60,7 +61,9 @@ class GameController {
             return res.redirect('/');
         }
 
-        res.render('games/show', { game: gamesAPI.data[0] });
+        const reviews = await ReviewModel.find({ author: req.params.id });
+
+        res.render('games/show', { game: gamesAPI.data[0], reviews });
     }
 }
 

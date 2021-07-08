@@ -19,6 +19,7 @@ const HttpException = require('./src/utils/HttpException');
 const errorMiddleware = require('./src/middleware/error');
 const userRouter = require('./src/routes/users');
 const gameRouter = require('./src/routes/games');
+const reviewRouter = require('./src/routes/reviews');
 const { globalMiddleware, checkCsurfError, csurfMiddleware } = require('./src/middleware/middleware');
 // Initiating express application
 const app = express();
@@ -94,6 +95,7 @@ app.use(csurfMiddleware);
 // Routes
 app.use('/', userRouter);
 app.use('/games', gameRouter);
+app.use('/games/:id/reviews', reviewRouter);
 
 app.get('/', (req, res) => {
     res.render('home');
