@@ -3,3 +3,22 @@
         <% } else {%>
             <% layout('layouts/boilerplate') %>
                 <% } %>
+
+                    <div class="card mb-5" style="width: 30%;">
+                        <% if (game.cover) {%>
+                            <img src="https://images.igdb.com/igdb/image/upload/t_1080p/<%= game.cover.image_id %>.jpg"
+                                class="card-img-top img-game" alt="...">
+                            <% } else { %>
+                                <img src="https://images.unsplash.com/photo-1595452767427-0905ad9b036d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+                                    class="card-img-top img-game" alt="...">
+                                <% } %>
+                                    <div class="card-body">
+                                        <h2 class="card-title">
+                                            <%= game.name %>
+                                        </h2>
+                                        <p class="card-text">
+                                            <%= game.summary %>
+                                        </p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                    </div>

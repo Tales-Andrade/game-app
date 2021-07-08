@@ -5,16 +5,17 @@
 }
 
 .admin{
-    background-image: linear-gradient(to right,  #1c1c01, #737909 65%, #e9f602 100%);
+    background: linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
     background-size: cover;
     background-position: center;
 }
 
-.userList{
+.delete{
+    text-decoration: none;
     color: white;
 }
 
-.delete{
+.delete:hover{
     text-decoration: none;
     color: white;
 }

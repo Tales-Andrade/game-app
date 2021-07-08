@@ -1,14 +1,23 @@
 <% layout('layouts/admin') %>
 
-    <div class="container" style="color: white">
-        <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8 my-3">
-                <h1 class="text-center">All Users</h1>
-                <p class="text-center lead">The registered users are below:</p>
-                <% if(userList.length> 0) {%>
-                    <div class="responsive-table">
-                        <table class="table my-3">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 my-3">
+            <h1 class="text-center">All Users</h1>
+            <p class="text-center lead">The registered users are below:</p>
+            <% if(userList.length> 0) {%>
+                <div class="responsive-table">
+                    <table class="table table-hover table-dark table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">User Email</th>
+                                <th scope="col">User Role</th>
+                                <th scope="col">Edit User</th>
+                                <th scope="col">Delete User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <% userList.forEach(user=> { %>
                                 <tr class="userList">
                                     <td>
@@ -32,12 +41,12 @@
                                     </td>
                                 </tr>
                                 <% }); %>
-                        </table>
-                    </div>
-                    <% } else { %>
-                        <p class="text-center lead">There are no registered users in this application.</p>
-                        <% } %>
-            </div>
-            <div class="col-lg-2"></div>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else { %>
+                    <p class="text-center lead">There are no registered users in this application.</p>
+                    <% } %>
         </div>
+        <div class="col-lg-2"></div>
     </div>

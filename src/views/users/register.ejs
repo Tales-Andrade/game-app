@@ -7,9 +7,9 @@
                     <img src="https://images.unsplash.com/photo-1614294148960-9aa740632a87?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                         class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Register</h5>
                         <form action="/register" method="POST" class="validated-form" novalidate>
                             <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                            <h1 class="text-center h3 mb-3 fw-normal">Register</h1>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -80,7 +80,9 @@
                                 <label for="age" class="form-label">Age</label>
                                 <input type="number" class="form-control" id="age" name="age" min="0" max="115">
                             </div>
-                            <button class="btn btn-success btn-block">Register</button>
+                            <div class="mb-3">
+                                <button class="w-100 btn btn-lg btn-primary">Register</button>
+                            </div>
                         </form>
                     </div>
                 </div>

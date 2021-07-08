@@ -52,7 +52,7 @@ class GameController {
                 'Authorization': `Bearer ${process.env.TWITCH_APP_ACCESS_TOKEN}`,
                 'Accept': 'application/json'
             },
-            data: `fields name, rating, cover.*; where id=${req.params.id};`
+            data: `fields name, rating, summary, cover.*; where id = ${req.params.id};`
         });
 
         if (!gamesAPI.data.length) {
@@ -60,7 +60,7 @@ class GameController {
             return res.redirect('/');
         }
 
-        res.render('games/show', { game: gamesAPI.data });
+        res.render('games/show', { game: gamesAPI.data[0] });
     }
 }
 

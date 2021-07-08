@@ -3,36 +3,46 @@
         <% } else {%>
             <% layout('layouts/boilerplate') %>
                 <% } %>
-
-                    <div class="d-flex justify-content-center mb-3">
-                        <form id="form-game" action="/games" method="POST">
-                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
-                            <input type="text" name="search" id="search-game" class="search-game"
-                                placeholder="Search...">
-                        </form>
+                    <div class="container-fluid d-grid gap-3 align-items-center"
+                        style="grid-template-columns: 2fr 0.1fr;">
+                        <div class="d-flex align-items-center">
+                            <form action="/games" class="w-100 me-3" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                <input type="text" name="search" id="search-game" class="form-control search-game"
+                                    placeholder="Search..." style="color: white;">
+                            </form>
+                        </div>
                     </div>
-                    <div class="d-flex flex-wrap justify-content-between">
-                        <% games.forEach((game, index)=> {%>
-                            <a class="card-link" href="games/<%= game.id %>">
-                                <div class="card game-card mb-3" style="width: 14rem;">
-                                    <% if (game.cover) {%>
-                                        <img src="https://images.igdb.com/igdb/image/upload/t_1080p/<%= game.cover.image_id %>.jpg"
-                                            class="card-img-top img-game" alt="...">
-                                        <% } else { %>
-                                            <% } %>
-                                                <div class="card-body" style="padding: 8px;">
-                                                    <p class="card-title">
-                                                        <% if (game.name.length> 20) {%>
-                                                            <%- game.name.slice(0, 19) %>...
-                                                                <% } else { %>
-                                                                    <%= game.name %>
-                                                                        <% } %>
-                                                    </p>
-                                                    <div class="game-grade">
-                                                        <%- Math.round(game.rating) %>%
-                                                    </div>
-                                                </div>
-                                </div>
-                            </a>
-                            <% }); %>
+                    <div class="album ps-5 py-5 mb-3">
+                        <div class="container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                <% games.forEach((game, index)=> {%>
+                                    <div class="col">
+                                        <a class="card-link" href="games/<%= game.id %>">
+                                            <div class="card shadow-sm game-card" style="width: 14rem;">
+                                                <% if (game.cover) {%>
+                                                    <img src="https://images.igdb.com/igdb/image/upload/t_1080p/<%= game.cover.image_id %>.jpg"
+                                                        class="card-img-top img-game" alt="...">
+                                                    <% } else { %>
+                                                        <img src="https://images.unsplash.com/photo-1595452767427-0905ad9b036d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+                                                            class="card-img-top img-game" alt="...">
+                                                        <% } %>
+                                                            <div class="card-body" style="padding: 8px;">
+                                                                <p class="card-title">
+                                                                    <% if (game.name.length> 20) {%>
+                                                                        <%- game.name.slice(0, 19) %>...
+                                                                            <% } else { %>
+                                                                                <%= game.name %>
+                                                                                    <% } %>
+                                                                </p>
+                                                                <div class="game-grade">
+                                                                    <%- Math.round(game.rating) %>%
+                                                                </div>
+                                                            </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <% }); %>
+                            </div>
+                        </div>
                     </div>
