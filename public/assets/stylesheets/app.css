@@ -2,12 +2,22 @@
     background-image: linear-gradient(to right, #240035, #670979 40%, #1b80d0 100%);
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .admin{
     background: linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    filter: blur(0.5rem);
 }
 
 .delete{

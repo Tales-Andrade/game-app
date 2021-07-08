@@ -27,5 +27,6 @@ module.exports.reviewSchema = Joi.object({
     review: Joi.object({
         rating: Joi.number().required().min(0).max(100),
         body: Joi.string().required().escapeHTML()
-    }).required()
+    }).required(),
+    _csrf: Joi.string().required().escapeHTML()
 });

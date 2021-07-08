@@ -1,5 +1,6 @@
 const axios = require('axios');
 const ReviewModel = require('../models/review');
+const UserModel = require('../models/user');
 
 class GameController {
     renderGames = async (req, res) => {
@@ -53,7 +54,7 @@ class GameController {
                 'Authorization': `Bearer ${process.env.TWITCH_APP_ACCESS_TOKEN}`,
                 'Accept': 'application/json'
             },
-            data: `fields name, rating, summary, cover.*; where id = ${req.params.id};`
+            data: `fields name, rating, summary, category, first_release_date, platforms, cover.*; where id = ${req.params.id};`
         });
 
         if (!gamesAPI.data.length) {
@@ -61,9 +62,15 @@ class GameController {
             return res.redirect('/');
         }
 
-        const reviews = await ReviewModel.find({ author: req.params.id });
+        const reviews = await ReviewModel.find({ game: req.params.id });
+        const users = [];
 
-        res.render('games/show', { game: gamesAPI.data[0], reviews });
+        for (let review of reviews) {
+            const user = await UserModel.findOne({ id: review.author });
+            users.push(user);
+        }
+
+        res.render('games/show', { game: gamesAPI.data[0], reviews, users });
     }
 }
 

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const Role = require('../utils/userRoles');
 const ReviewModel = require('../models/review');
 const { reviewSchema } = require('../../schemas');
+const HttpException = require('../utils/HttpException');
 
 module.exports.globalMiddleware = (req, res, next) => {
     res.locals.error = req.flash('error');
@@ -57,7 +58,7 @@ module.exports.isAuthor = async (req, res, next) => {
 module.exports.isReviewAuthor = async (req, res, next) => {
     const review = await ReviewModel.findById(req.params.reviewId);
 
-    if (!review.author.equals(req.session.user.id)) {
+    if (!(review.author === req.session.user.id)) {
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/games/${req.params.id}`);
     }
