@@ -1,6 +1,8 @@
 const axios = require('axios');
 const ReviewModel = require('../models/review');
 const UserModel = require('../models/user');
+const { createDate } = require('../utils/date');
+const { getColor } = require('../utils/color');
 
 class GameController {
     renderGames = async (req, res) => {
@@ -54,7 +56,7 @@ class GameController {
                 'Authorization': `Bearer ${process.env.TWITCH_APP_ACCESS_TOKEN}`,
                 'Accept': 'application/json'
             },
-            data: `fields name, rating, summary, category, first_release_date, platforms, cover.*; where id = ${req.params.id};`
+            data: `fields name, rating, summary, genres.*, first_release_date, platforms.*, cover.*; where id = ${req.params.id};`
         });
 
         if (!gamesAPI.data.length) {
@@ -62,6 +64,7 @@ class GameController {
             return res.redirect('/');
         }
 
+        const user = req.session.user;
         const reviews = await ReviewModel.find({ game: req.params.id });
         const users = [];
 
@@ -70,7 +73,10 @@ class GameController {
             users.push(user);
         }
 
-        res.render('games/show', { game: gamesAPI.data[0], reviews, users });
+        const date = createDate(gamesAPI.data[0].first_release_date);
+        const { color, text } = getColor(gamesAPI.data[0].rating);
+
+        res.render('games/show', { game: gamesAPI.data[0], reviews, user, users, date, color, text });
     }
 }
 

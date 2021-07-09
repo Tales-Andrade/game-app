@@ -1,9 +1,12 @@
 const UserModel = require('../models/user');
+const ReviewModel = require('../models/review');
+const FavoriteModel = require('../models/favorite');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const HttpException = require('../utils/HttpException');
 const Role = require('../utils/userRoles');
+const { User } = require('../utils/userRoles');
 
 require('dotenv').config();
 
@@ -60,6 +63,14 @@ class UserController {
     };
 
     deleteUser = async (req, res, next) => {
+        const reviews = await ReviewModel.find({ author: req.params.id });
+
+        for (let review of reviews) {
+            await ReviewModel.findByIdAndDelete({ _id: review._id });
+        }
+
+        await FavoriteModel.findOneAndDelete({ user: req.params.id });
+
         const result = await UserModel.delete(req.params.id);
 
         if (!result) {
@@ -68,7 +79,12 @@ class UserController {
         }
 
         req.flash('success', 'User successfully deleted!');
-        res.redirect('/logout');
+
+        if (req.session.user.role !== Role.Admin) {
+            return res.redirect('/logout');
+        }
+
+        res.redirect('/admin');
     };
 
     renderEditForm = async (req, res, next) => {
@@ -102,8 +118,14 @@ class UserController {
             return res.redirect('/register');
         }
 
+        const user = await UserModel.findOne({ email: req.body.email });
+        const favorites = new FavoriteModel();
+        favorites.user = user.id;
+        favorites.games = [];
+        await favorites.save();
+
         req.flash('success', 'Your registration has been completed successfully!');
-        res.redirect('/');
+        res.redirect('/login');
     };
 
     renderLogin = (req, res) => {

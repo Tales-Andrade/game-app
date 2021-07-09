@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const GameController = require('../controllers/games');
-const { catchAsync, isAdmin, isUser, createUserSchema, updateUserSchema, validateLogin, isLoggedIn } = require('../middleware/middleware');
+const { catchAsync } = require('../middleware/middleware');
 
 // Main Page
 router.route('/')
