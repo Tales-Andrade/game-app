@@ -56,6 +56,7 @@
                                     <form action="/profiles/<%=user.id%>/favorites?_method=PUT" method="POST"
                                         class="mb-3 validated-form" novalidate>
                                         <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                        <input type="hidden" name="game" value="<%=game.id%>">
                                         <button class="w-100 btn btn-lg btn-secondary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
