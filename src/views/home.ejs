@@ -34,16 +34,17 @@
                 </nav>
             </div>
         </header>
-        <main class="px-3">
-            <h1>Game Centre</h1>
-            <p class="lead"> Welcome to Game Centre! <br> Jump right in and check out our list of games. <br>
-                Share and read comments, find favorites and new games!</p>
-            <a href="/games" class="btn btn-lg home-btn-secondary font-weight-bold border-white bg-white">View
-                Games</a>
-        </main>
-        <footer class="mt-auto text-white-50">
-            <p>&copy; Game Application 2021</p>
-        </footer>
+        <%- include('partials/flash.ejs') %>
+            <main class="px-3">
+                <h1>Game Centre</h1>
+                <p class="lead"> Welcome to Game Centre! <br> Jump right in and check out our list of games. <br>
+                    Share and read comments, find favorites and new games!</p>
+                <a href="/games" class="btn btn-lg home-btn-secondary font-weight-bold border-white bg-white">View
+                    Games</a>
+            </main>
+            <footer class="mt-auto text-white-50">
+                <p>&copy; Game Application 2021</p>
+            </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

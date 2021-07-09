@@ -30,8 +30,55 @@
                                         class="card-img-top p-3" alt="...">
                                     <% } %>
                         </div>
-                        <div class="w-75 h-50 card-body">
-                            HI
+                        <div class="w-50 h-50 p-4 p-md-5 mb-4 text-white">
+                            <div class="col-md-6 px-0">
+                                <h1 class="diplay-4 fst-italic">
+                                    <%= game.name %>
+                                </h1>
+                                <p class="lead">
+                                    <%= date %>
+                                </p>
+                                <p>
+                                    <% for (let i=0; i < game.genres.length - 1; i++){ %>
+                                        <%= game.genres[i].name %>,
+                                            <% } %>
+
+                                                <%= game.genres[game.genres.length - 1].name %>
+                                </p>
+                                <p>
+                                    <% for (let i=0; i < game.platforms.length - 1; i++){ %>
+                                        <%= game.platforms[i].name %>,
+                                            <% } %>
+
+                                                <%= game.platforms[game.platforms.length - 1].name %>
+                                </p>
+                                <% if (currentUser) {%>
+                                    <form action="/profiles/<%=user.id%>/favorites?_method=PUT" method="POST"
+                                        class="mb-3 validated-form" novalidate>
+                                        <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                        <button class="w-100 btn btn-lg btn-secondary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                            </svg>
+                                            Add to Favorites</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="w-25 h-50 text-white">
+                            <svg class="bd-placeholder-img rounded-circle mt-5" width="140" height="140"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="<%=color%>"></rect><text x="40%" y="50%"
+                                    fill="<%=text%>" dy=".3em" style="height: 140px;">
+                                    <%- Math.round(game.rating) %>%
+                                </text>
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -45,67 +92,71 @@
                         </p>
                     </div>
                 </div>
-
-
-                <div class="col-6">
-                    <% if(currentUser) {%>
-                        <h2>Leave a Review</h2>
-                        <form action="/games/<%=game.id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
-                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
-                            <div class="mb-3">
-                                <fieldset class="starability-grow">
-                                    <legend>Rating:</legend>
-                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
-                                        value="0" checked aria-label="No rating." />
-                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                    <label for="first-rate1" title="Terrible">1 star</label>
-                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                    <label for="first-rate2" title="Not good">2 stars</label>
-                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                    <label for="first-rate3" title="Average">3 stars</label>
-                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                    <label for="first-rate4" title="Very good">4 stars</label>
-                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                    <label for="first-rate5" title="Amazing">5 stars</label>
-                                </fieldset>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="body">Review:</label>
-                                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
-                                    required></textarea>
-                                <div class="valid-feedback">
-                                    This is a valid input!
-                                </div>
-                            </div>
-                            <button class="w-100 btn btn-lg btn-success">Submit</button>
-                        </form>
-                        <% } else {%>
-                            <h2>Reviews</h2>
-                            <% } %>
-                                <% for (let i=0; i < reviews.length; i++) {%>
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <%= users[i].username %>
-                                            </h5>
-                                            <p class="starability-result" data-rating="<%= review.rating %>">
-                                                Rated: <%= reviews[i].rating %> stars
-                                            </p>
-                                            <p class="card-text">
-                                                <%= reviews[i].body %>
-                                            </p>
-                                            <% if (currentUser && (users[i].id===currentUser.id)) {%>
-                                                <form
-                                                    action="/games/<%=game.id%>/reviews/<%=reviews[i]._id%>?_method=DELETE"
-                                                    method="POST">
-                                                    <input type="hidden" name="_csrf" value="<%= csurfToken %>">
-                                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                                <% } %>
+                <div class="position-relative overflow-hidden text-center bg-secondary text-white">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="w-50 h-50">
+                            <% if(currentUser) {%>
+                                <h2>Leave a Review</h2>
+                                <form action="/games/<%=game.id%>/reviews" method="POST" class="mb-3 validated-form"
+                                    novalidate>
+                                    <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <fieldset class="starability-grow">
+                                            <legend>Rating:</legend>
+                                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                                value="0" checked aria-label="No rating." />
+                                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                            <label for="first-rate1" title="Terrible">1 star</label>
+                                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                            <label for="first-rate2" title="Not good">2 stars</label>
+                                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                            <label for="first-rate3" title="Average">3 stars</label>
+                                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                            <label for="first-rate4" title="Very good">4 stars</label>
+                                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                            <label for="first-rate5" title="Amazing">5 stars</label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="body">Review:</label>
+                                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
+                                            required></textarea>
+                                        <div class="valid-feedback">
+                                            This is a valid input!
                                         </div>
                                     </div>
+                                    <button class="w-100 btn btn-lg btn-success">Submit</button>
+                                </form>
+                                <% } else {%>
+                                    <h2>Reviews</h2>
                                     <% } %>
-                </div>
+                                        <% for (let i=0; i < reviews.length; i++) {%>
+                                            <div
+                                                class="d-flex justify-content-center align-items-center card mb-3 text-dark">
+                                                <div class="card-body">
+                                                    <h5 class="display-6">
+                                                        <%= users[i].username %>
+                                                    </h5>
+                                                    <p class="starability-result"
+                                                        data-rating="<%= reviews[i].rating %>">
+                                                        Rated: <%= reviews[i].rating %> stars
+                                                    </p>
+                                                    <p class="card-text">
+                                                        <%= reviews[i].body %>
+                                                    </p>
+                                                    <% if (currentUser && (users[i].id===currentUser.id)) {%>
+                                                        <form
+                                                            action="/games/<%=game.id%>/reviews/<%=reviews[i]._id%>?_method=DELETE"
+                                                            method="POST">
+                                                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                        </form>
+                                                        <% } %>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                        </div>
+                    </div>
                 </div>
         </main>
         <%- include('../partials/footer') %>
