@@ -156,7 +156,7 @@ class UserController {
 
         req.session.token = token;
         req.session.user = user;
-        let url = (user.role === Role.Admin) ? '/admin' : `/profiles/${user.id}`;
+        let url = (user.role === Role.Admin) ? '/admin' : '/games';
 
         res.redirect(url);
     };

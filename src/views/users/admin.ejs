@@ -13,6 +13,7 @@
                                 <th scope="col">Username</th>
                                 <th scope="col">User Email</th>
                                 <th scope="col">User Role</th>
+                                <th class="col">User Favorites</th>
                                 <th scope="col">Edit User</th>
                                 <th scope="col">Delete User</th>
                             </tr>
@@ -21,7 +22,9 @@
                             <% userList.forEach(user=> { %>
                                 <tr class="userList">
                                     <td>
-                                        <%= user.username %>
+                                        <a href="/profiles/<%=user.id%>" class="delete">
+                                            <%= user.username %>
+                                        </a>
                                     </td>
                                     <td>
                                         <%= user.email %>
@@ -30,7 +33,10 @@
                                         <%= user.role %>
                                     </td>
                                     <td>
-                                        <a class="delete" href="/profiles/<%=user.id%>/edit">Edit</a>
+                                        <a href="/profiles/<%=user.id%>/favorites" class="delete">Favorites</a>
+                                    </td>
+                                    <td>
+                                        <a href="/profiles/<%=user.id%>/edit" class="delete">Edit</a>
                                     </td>
                                     <td style="padding: 2px 0 0 0">
                                         <form class="d-inline" action="/profiles/<%= user.id %>?_method=DELETE"

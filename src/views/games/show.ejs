@@ -52,7 +52,7 @@
 
                                                 <%= game.platforms[game.platforms.length - 1].name %>
                                 </p>
-                                <% if (currentUser) {%>
+                                <% if (currentUser && (!favorites.includes(game.id))) {%>
                                     <form action="/profiles/<%=user.id%>/favorites?_method=PUT" method="POST"
                                         class="mb-3 validated-form" novalidate>
                                         <input type="hidden" name="_csrf" value="<%= csurfToken %>">
@@ -138,14 +138,17 @@
                                                     <h5 class="display-6">
                                                         <%= users[i].username %>
                                                     </h5>
-                                                    <p class="starability-result"
-                                                        data-rating="<%= reviews[i].rating %>">
-                                                        Rated: <%= reviews[i].rating %> stars
-                                                    </p>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <p class="starability-result"
+                                                            data-rating="<%= reviews[i].rating %>">
+                                                            Rated: <%= reviews[i].rating %> stars
+                                                        </p>
+                                                    </div>
                                                     <p class="card-text">
                                                         <%= reviews[i].body %>
                                                     </p>
-                                                    <% if (currentUser && (users[i].id===currentUser.id)) {%>
+                                                    <% if (currentUser && ((users[i].id===currentUser.id) ||
+                                                        (currentUser.role==='Admin' ))) {%>
                                                         <form
                                                             action="/games/<%=game.id%>/reviews/<%=reviews[i]._id%>?_method=DELETE"
                                                             method="POST">

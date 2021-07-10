@@ -1,6 +1,7 @@
 const axios = require('axios');
 const ReviewModel = require('../models/review');
 const UserModel = require('../models/user');
+const FavoriteModel = require('../models/favorite');
 const { createDate } = require('../utils/date');
 const { getColor } = require('../utils/color');
 
@@ -65,6 +66,8 @@ class GameController {
         }
 
         const user = req.session.user;
+        let favorites = await FavoriteModel.findOne({ user: user.id });
+        favorites = favorites.games;
         const reviews = await ReviewModel.find({ game: req.params.id });
         const users = [];
 
@@ -76,7 +79,7 @@ class GameController {
         const date = createDate(gamesAPI.data[0].first_release_date);
         const { color, text } = getColor(gamesAPI.data[0].rating);
 
-        res.render('games/show', { game: gamesAPI.data[0], reviews, user, users, date, color, text });
+        res.render('games/show', { game: gamesAPI.data[0], favorites, reviews, user, users, date, color, text });
     }
 }
 
