@@ -1,0 +1,68 @@
+<% if (currentUser && currentUser.role==='Admin' ) {%>
+    <% layout('layouts/admin') %>
+        <% } else {%>
+            <% layout('layouts/boilerplate') %>
+                <% } %>
+
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8 my-3 text-white">
+                            <h1 class="text-center">Favorites</h1>
+                            <p class="text-center lead">The list of your favorite games is below:</p>
+                            <% if(favorites.length> 0) {%>
+                                <div class="responsive-table">
+                                    <table class="table table-hover table-dark table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Thumbnail</th>
+                                                <th scope="col">Game Name</th>
+                                                <th scope="col">Game Rating</th>
+                                                <th scope="col">Remove Favorite</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% favorites.forEach(favorite=> { %>
+                                                <tr class="align-middle">
+                                                    <td>
+                                                        <% if (favorite.cover) {%>
+                                                            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/<%= favorite.cover.image_id %>.jpg"
+                                                                class="card-img-top p-3" alt="...">
+                                                            <% } else { %>
+                                                                <img src="https://images.unsplash.com/photo-1595452767427-0905ad9b036d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+                                                                    class="card-img-top p-3" alt="...">
+                                                                <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/games/<%=favorite.id%>" class="delete">
+                                                            <%= favorite.name %>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <%- Math.round(favorite.rating) %>
+                                                    </td>
+                                                    <td style="padding: 2px 0 0 0">
+                                                        <form class="d-inline"
+                                                            action="/profiles/<%= user %>/favorites?_method=DELETE"
+                                                            method="POST">
+                                                            <input type="hidden" name="_csrf" value="<%= csurfToken %>">
+                                                            <input type="hidden" name="game" value="<%=favorite.id%>">
+                                                            <button class="btn btn-link delete"><svg
+                                                                    xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" fill="currentColor"
+                                                                    class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                                                </svg> Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% } else { %>
+                                    <p class="text-center lead">There are no favorites in your favorite list.</p>
+                                    <% } %>
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
