@@ -66,8 +66,14 @@ class GameController {
         }
 
         const user = req.session.user;
-        let favorites = await FavoriteModel.findOne({ user: user.id });
-        favorites = favorites.games;
+
+        let favorites = [];
+
+        if (user) {
+            favorites = await FavoriteModel.findOne({ user: user.id });
+            favorites = favorites.games;
+        }
+
         const reviews = await ReviewModel.find({ game: req.params.id });
         const users = [];
 
