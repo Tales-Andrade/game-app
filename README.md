@@ -5,35 +5,31 @@ Game centre where users can find information about games, leave reviews about th
 This project has as goal the improvement of my knowledge of full stack web development.
 
 ## Deployed Application in Heroku
-[Game Centre]()
+[Game Centre](https://nameless-reef-55747.herokuapp.com/)
 
 ## Features
+- CRUD Functionalities for Reviews 
+- Flash Messages for Successful and Error Operations
+- User Authentication
+- User Authorization
+- Admin User Authorization
+- CRUD Functionalities for Favorites
+- Individual Games Pages
+- Games Information from IGDB API
 
 ## Technologies
 ### Front End
-- ejs
-- ejs-mate
+- EJS
 - Bootstrap v5.0
-- style-loader
-- regenerator-runtime
-- css-loader
+
 ### Back End
 - NodeJS
 - MySQL
 - MongoDB
-- mongoose
-- express
-- express-session
-- express-mongo-sanitize
-- passport
-- passport-local
-- passport-local-mongoose
-- connect-flash
-- connect-mongo
-- method-override
-- helmet
-- joi
-- sanitize-html
+- Mongoose
+- Express
+- JWT
+- Axios
 
 ### Dependencies
 - babel
