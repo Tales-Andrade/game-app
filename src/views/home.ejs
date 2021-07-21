@@ -27,7 +27,8 @@
                                 <a href="/admin" class="home-nav-link">Admin</a>
                                 <% } else { %>
                                     <a class="home-nav-link" href="/favorites">Favorites</a>
-                                    <a href="/profiles/<%= currentUser.id %>" class="home-nav-link">Profile</a>
+                                    <a href="/profiles/<%= currentUser.id %>/favorites"
+                                        class="home-nav-link">Profile</a>
                                     <% } %>
                                         <a href="/logout" class="home-nav-link">Logout</a>
                                         <% } %>

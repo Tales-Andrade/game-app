@@ -36,7 +36,24 @@
                                                                                     <% } %>
                                                                 </p>
                                                                 <div class="game-grade">
-                                                                    <%- Math.round(game.rating) %>%
+                                                                    <svg class="bd-placeholder-img rounded-circle mt-5"
+                                                                        width="25" height="25"
+                                                                        xmlns="http://www.w3.org/2000/svg" role="img"
+                                                                        aria-label="Placeholder: 25x25"
+                                                                        preserveAspectRatio="xMidYMid slice"
+                                                                        focusable="false">
+                                                                        <title>Placeholder</title>
+                                                                        <rect width="100%" height="100%"
+                                                                            fill="<%=colors[index]%>"></rect><text
+                                                                            x="13%" y="50%" fill="<%=texts[index]%>"
+                                                                            dy=".3em" style="height: 40px;">
+                                                                            <% if (Math.round(game.rating)) {%>
+                                                                                <%- Math.round(game.rating) %>
+                                                                                    <% } else { %>
+                                                                                        n/a
+                                                                                        <% } %>
+                                                                        </text>
+                                                                    </svg>
                                                                 </div>
                                                             </div>
                                             </div>

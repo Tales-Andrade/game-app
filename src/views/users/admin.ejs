@@ -14,6 +14,7 @@
                                 <th scope="col">User Email</th>
                                 <th scope="col">User Role</th>
                                 <th class="col">User Favorites</th>
+                                <th class="col">User Reviews</th>
                                 <th scope="col">Edit User</th>
                                 <th scope="col">Delete User</th>
                             </tr>
@@ -34,6 +35,9 @@
                                     </td>
                                     <td>
                                         <a href="/profiles/<%=user.id%>/favorites" class="delete">Favorites</a>
+                                    </td>
+                                    <td>
+                                        <a href="/profiles/<%=user.id%>/reviews" class="delete">Reviews</a>
                                     </td>
                                     <td>
                                         <a href="/profiles/<%=user.id%>/edit" class="delete">Edit</a>

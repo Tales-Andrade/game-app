@@ -23,7 +23,16 @@ class GameController {
             return res.redirect('/');
         }
 
-        res.render('games/index', { games: gamesAPI.data });
+        let colors = [];
+        let texts = [];
+
+        for (let i = 0; i < gamesAPI.data.length; i++) {
+            const { color, text } = getColor(gamesAPI.data[i].rating);
+            colors.push(color);
+            texts.push(text);
+        }
+
+        res.render('games/index', { games: gamesAPI.data, colors, texts });
     }
 
     searchGames = async (req, res) => {
@@ -45,7 +54,16 @@ class GameController {
             return res.redirect('/');
         }
 
-        res.render('games/index', { games: gamesAPI.data });
+        let colors = [];
+        let texts = [];
+
+        for (let i = 0; i < gamesAPI.data.length; i++) {
+            const { color, text } = getColor(gamesAPI.data[i].rating);
+            colors.push(color);
+            texts.push(text);
+        }
+
+        res.render('games/index', { games: gamesAPI.data, colors, texts });
     }
 
     showGame = async (req, res) => {
